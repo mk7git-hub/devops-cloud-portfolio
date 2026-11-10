@@ -1,0 +1,116 @@
+<!doctype html><html lang="en" data-theme="dark"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kwadwo Aboagye | DevOps Cloud Portfolio</title>
+<meta name="description" content="I build AWS infrastructure that secures itself: Terraform, keyless CI/CD, automated remediation and detection-as-code.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230d1117'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%233fb950' font-family='monospace'%3EKA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/site.css">
+</head><body>
+<header class="nav"><div class="wrap nav-in">
+<a class="logo" href="#top">~/kwadwo</a>
+<nav><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#built">How it's built</a><a href="#contact">Contact</a></nav><button id="theme" aria-label="Toggle dark and light mode">◐</button>
+</div></header>
+<main id="top">
+<section class="hero"><div class="wrap">
+<p class="eyebrow">$ whoami</p>
+<h1>Kwadwo Aboagye</h1>
+<p class="role">Cloud Security &amp; DevOps Engineer</p>
+<p class="lead">I build AWS infrastructure that secures itself: Terraform, keyless CI/CD, automated remediation and detection-as-code.</p>
+<div class="creds"><span class="cred">Active DoD Secret Clearance</span><span class="cred">CISSP</span><span class="cred">CMMC CCP</span><span class="cred">AWS Certified Developer – Associate</span></div>
+<div class="cta"><a class="btn" href="#projects">View projects</a><a class="btn ghost" href="https://github.com/mk7git-hub" target="_blank" rel="noopener">GitHub</a><a class="btn ghost" href="https://www.linkedin.com/in/kwadwo-tech/" target="_blank" rel="noopener">LinkedIn</a></div>
+<div class="stats"><div class="stat"><b>12+</b><span>years in security</span></div><div class="stat"><b>7</b><span>public projects</span></div><div class="stat"><b>3</b><span>deployed on AWS with evidence</span></div><div class="stat"><b>0</b><span>stored cloud keys</span></div></div>
+</div></section>
+<section id="about" class="sec"><div class="wrap"><p class="eyebrow">About</p><h2>Security engineer who automates the fix</h2><p>12+ years in cybersecurity and Linux systems, now focused on AWS cloud security and DevOps. Today I&#x27;m a Senior Threat Detection &amp; Response Engineer at a global pharmaceutical enterprise, building detection-as-code across Splunk, QRadar and Google SecOps and automating response with SOAR.</p><p>In the cloud I treat everything as code: infrastructure in Terraform, pipelines with no stored keys, guardrails that hold even if CI is compromised, and compliance (NIST 800-53, 800-171, CMMC) as a by-product of good engineering.</p><p class="loc">Delaware, USA · Remote</p></div></section>
+<section id="projects" class="sec alt"><div class="wrap">
+<p class="eyebrow">Projects</p><h2>Built, deployed and tested</h2>
+<p class="sub">AWS projects run in a dedicated lab account; detection results use public or synthetic data, never employer data.</p>
+<div class="filter" role="group" aria-label="Filter projects"><button class="on" data-f="all">All</button><button data-f="cloud">Cloud security</button><button data-f="detect">Detection &amp; CTI</button></div>
+<div class="grid">
+<article class="card" data-cat="cloud">
+  <div class="card-top"><span class="cat">Cloud security</span><span class="badge live">Deployed + evidence</span></div>
+  <h3>AWS Secure Landing Zone</h3>
+  <p><b>Problem</b> New AWS accounts start insecure and get hardened by hand.</p>
+  <p><b>Result</b> Audited security baseline in minutes, mapped to NIST 800-171 / CMMC L2.</p>
+  <img loading="lazy" src="https://raw.githubusercontent.com/mk7git-hub/aws-secure-landing-zone/main/docs/img/pipeline.png" alt="Evidence from a live run of AWS Secure Landing Zone">
+  <div class="tags"><span class="tag">Terraform</span><span class="tag">GitHub Actions</span><span class="tag">OIDC</span><span class="tag">Security Hub</span><span class="tag">GuardDuty</span><span class="tag">Checkov</span></div>
+  <a class="more" href="https://github.com/mk7git-hub/aws-secure-landing-zone" target="_blank" rel="noopener">Code &amp; evidence &rarr;</a>
+</article>
+<article class="card" data-cat="cloud">
+  <div class="card-top"><span class="cat">Cloud security</span><span class="badge live">Deployed + evidence</span></div>
+  <h3>AWS Auto-Remediation</h3>
+  <p><b>Problem</b> A public S3 bucket can leak data in minutes; tickets take hours.</p>
+  <p><b>Result</b> Exposed bucket locked again within 90 seconds in a live test.</p>
+  <img loading="lazy" src="https://raw.githubusercontent.com/mk7git-hub/aws-auto-remediation/main/docs/img/demo.png" alt="Evidence from a live run of AWS Auto-Remediation">
+  <div class="tags"><span class="tag">EventBridge</span><span class="tag">Lambda</span><span class="tag">Python</span><span class="tag">Security Hub</span><span class="tag">SNS</span></div>
+  <a class="more" href="https://github.com/mk7git-hub/aws-auto-remediation" target="_blank" rel="noopener">Code &amp; evidence &rarr;</a>
+</article>
+<article class="card" data-cat="cloud">
+  <div class="card-top"><span class="cat">Cloud security</span><span class="badge live">Deployed + evidence</span></div>
+  <h3>Security Findings Data Lake</h3>
+  <p><b>Problem</b> Security Hub and GuardDuty can&#x27;t answer trend questions.</p>
+  <p><b>Result</b> Findings as partitioned Parquet, queryable in Athena; proven end to end.</p>
+  <img loading="lazy" src="https://raw.githubusercontent.com/mk7git-hub/security-findings-data-lake/main/docs/img/athena.png" alt="Evidence from a live run of Security Findings Data Lake">
+  <div class="tags"><span class="tag">Kinesis Firehose</span><span class="tag">S3</span><span class="tag">Parquet</span><span class="tag">Glue</span><span class="tag">Athena</span></div>
+  <a class="more" href="https://github.com/mk7git-hub/security-findings-data-lake" target="_blank" rel="noopener">Code &amp; evidence &rarr;</a>
+</article>
+<article class="card" data-cat="detect">
+  <div class="card-top"><span class="cat">Detection & CTI</span><span class="badge">Code + CI</span></div>
+  <h3>Detection-as-Code Pipeline</h3>
+  <p><b>Problem</b> Detections edited in the SIEM, untested, break silently.</p>
+  <p><b>Result</b> 8 Sigma rules, unit-tested in CI and auto-converted to Splunk SPL.</p>
+  
+  <div class="tags"><span class="tag">Sigma</span><span class="tag">pySigma</span><span class="tag">Python</span><span class="tag">pytest</span><span class="tag">Splunk</span></div>
+  <a class="more" href="https://github.com/mk7git-hub/detection-as-code-pipeline" target="_blank" rel="noopener">Code &amp; evidence &rarr;</a>
+</article>
+<article class="card" data-cat="detect">
+  <div class="card-top"><span class="cat">Detection & CTI</span><span class="badge">Code + CI</span></div>
+  <h3>Behavioral Correlation Engine</h3>
+  <p><b>Problem</b> Single-event alerts drown the SOC; attacks are sequences.</p>
+  <p><b>Result</b> Every test attack caught, zero false positives, up to 99.98% fewer alerts.</p>
+  
+  <div class="tags"><span class="tag">Python</span><span class="tag">Sliding window</span><span class="tag">YAML rules</span><span class="tag">Runbooks</span></div>
+  <a class="more" href="https://github.com/mk7git-hub/behavioral-correlation-engine" target="_blank" rel="noopener">Code &amp; evidence &rarr;</a>
+</article>
+<article class="card" data-cat="detect">
+  <div class="card-top"><span class="cat">Detection & CTI</span><span class="badge">Code + CI</span></div>
+  <h3>Telemetry Coverage Analyzer</h3>
+  <p><b>Problem</b> ATT&amp;CK coverage claimed without the logs to back it.</p>
+  <p><b>Result</b> Coverage scored from MITRE data; the highest-value log sources ranked.</p>
+  
+  <div class="tags"><span class="tag">Python</span><span class="tag">MITRE ATT&amp;CK</span><span class="tag">Navigator</span></div>
+  <a class="more" href="https://github.com/mk7git-hub/telemetry-coverage-analyzer" target="_blank" rel="noopener">Code &amp; evidence &rarr;</a>
+</article>
+<article class="card" data-cat="detect">
+  <div class="card-top"><span class="cat">Detection & CTI</span><span class="badge">Code + CI</span></div>
+  <h3>CTI Threat Briefs</h3>
+  <p><b>Problem</b> Advisories are long; defenders need what to hunt and fix.</p>
+  <p><b>Result</b> Two CISA advisories mapped to ATT&amp;CK with CI-tested Sigma hunts.</p>
+  
+  <div class="tags"><span class="tag">CISA</span><span class="tag">MITRE ATT&amp;CK</span><span class="tag">Sigma</span><span class="tag">KQL</span><span class="tag">CMMC</span></div>
+  <a class="more" href="https://github.com/mk7git-hub/cti-threat-briefs" target="_blank" rel="noopener">Code &amp; evidence &rarr;</a>
+</article>
+</div></div></section>
+<section id="skills" class="sec"><div class="wrap"><p class="eyebrow">Skills</p><h2>Tools I use in production and in the lab</h2><div class="skills"><div class="skill"><h4>Cloud &amp; AWS</h4><ul><li>IAM &amp; least privilege</li><li>VPC</li><li>CloudTrail</li><li>GuardDuty</li><li>Security Hub</li><li>Config</li><li>KMS</li><li>Lambda</li><li>EventBridge</li><li>Athena</li><li>CloudFront</li><li>S3</li></ul></div><div class="skill"><h4>IaC &amp; CI/CD</h4><ul><li>Terraform</li><li>HCP Terraform</li><li>GitHub Actions</li><li>OIDC federation</li><li>Checkov</li><li>TFLint</li><li>Docker</li></ul></div><div class="skill"><h4>Detection &amp; Response</h4><ul><li>Splunk SPL</li><li>QRadar</li><li>Google SecOps</li><li>CrowdStrike</li><li>Sigma</li><li>MITRE ATT&amp;CK</li><li>SOAR</li></ul></div><div class="skill"><h4>Compliance</h4><ul><li>NIST 800-53</li><li>NIST 800-171</li><li>CMMC L2</li><li>FedRAMP</li><li>CIS Benchmarks</li></ul></div></div></div></section>
+<section id="experience" class="sec alt"><div class="wrap"><p class="eyebrow">Experience</p><h2>Where I've done the work</h2><ul class="exp"><li><b>Senior Threat Detection &amp; Response Engineer</b><span>Global pharmaceutical enterprise</span><em>Detection-as-code, multi-cloud posture, SOAR automation</em></li><li><b>DFIR Engineer / SIRT</b><span>Global pharmaceutical enterprise</span><em>Incident response end to end, forensics, threat intelligence</em></li><li><b>Cyber Security Analyst</b><span>Anderson Packaging</span><em>Security control assessments, SSPs, network monitoring</em></li><li><b>Linux Admin / Cyber Analyst</b><span>Federal Aviation Administration (contractor)</span><em>A&amp;A packages, FISMA control assessment</em></li></ul></div></section>
+<section id="built" class="sec"><div class="wrap">
+<p class="eyebrow">How this site runs</p><h2>Serverless on AWS, deployed with no stored keys</h2>
+<pre class="arch">Browser
+  └── CloudFront (HTTPS, OAC, security headers)
+        ├── /*      → S3 (private bucket: HTML, CSS, JS)
+        └── /api/*  → API Gateway (HTTP API)
+                        └── Lambda (Python) → DynamoDB (visitor counter)</pre>
+<ul class="facts">
+<li><b>Terraform</b> provisions every resource; state in an encrypted S3 backend with locking.</li>
+<li><b>GitHub Actions</b> deploys on push to main through OIDC: a 1-hour role that can only sync this bucket and invalidate this distribution.</li>
+<li><b>Same-origin API</b>: CloudFront routes /api/* to API Gateway, so no CORS and no public API URL in the page.</li>
+<li><b>Abuse limits</b>: API throttling and Lambda reserved concurrency cap what a bot can cost.</li>
+</ul>
+<p class="counter">You are visitor <b id="visits">…</b> · <a href="https://github.com/mk7git-hub/devops-cloud-portfolio" target="_blank" rel="noopener">see the code</a></p>
+</div></section>
+<section id="contact" class="sec alt"><div class="wrap"><p class="eyebrow">Contact</p><h2>Open to Cloud Security and DevOps roles</h2>
+<p>Remote preferred, including cleared and federal work.</p>
+<div class="cta"><a class="btn" href="mailto:kwadwo.kaboagye@gmail.com">Email me</a><a class="btn ghost" href="https://www.linkedin.com/in/kwadwo-tech/" target="_blank" rel="noopener">LinkedIn</a><a class="btn ghost" href="https://github.com/mk7git-hub" target="_blank" rel="noopener">GitHub</a></div>
+</div></section>
+</main>
+<footer class="foot"><div class="wrap">Served from S3 via CloudFront · counter by Lambda + DynamoDB · deployed by GitHub Actions (OIDC)</div></footer>
+<script src="assets/app.js"></script>
+</body></html>

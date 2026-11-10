@@ -1,0 +1,5 @@
+owner           = "your-name"
+github_repo     = "mk7git-hub/devops-cloud-portfolio"
+github_owner_id = "255473628"
+github_repo_id  = "<from: gh api repos/mk7git-hub/devops-cloud-portfolio --jq .id>"
+# domain_name   = "example.com"   # optional, needs a Route 53 hosted zone

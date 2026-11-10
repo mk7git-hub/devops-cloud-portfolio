@@ -1,0 +1,67 @@
+name: ci-deploy
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check backend tests
+      - name: visitor counter unit tests
+        run: pytest -q
+
+  iac:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform fmt -check -recursive
+      - run: terraform init -backend=false -input=false
+      - run: terraform validate
+      - uses: terraform-linters/setup-tflint@v4
+      - run: tflint --init && tflint
+      - name: checkov
+        run: pip install checkov && checkov -d . --quiet --compact --framework terraform
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [test, iac]
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # OIDC: no AWS keys stored in GitHub
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: us-east-1
+      - name: sync site (HTML short cache, assets longer)
+        run: |
+          aws s3 sync site/ "s3://${{ vars.SITE_BUCKET }}/" --delete --exclude "*.html" --cache-control "public,max-age=86400"
+          aws s3 sync site/ "s3://${{ vars.SITE_BUCKET }}/" --delete --exclude "*" --include "*.html" --cache-control "public,max-age=300"
+      - name: invalidate CloudFront
+        run: aws cloudfront create-invalidation --distribution-id "${{ vars.CF_DISTRIBUTION_ID }}" --paths "/*"
+      - name: smoke test
+        run: |
+          curl -fsS "${{ vars.SITE_URL }}/" | grep -q "DevOps Cloud Portfolio"
+          curl -fsS -X POST "${{ vars.SITE_URL }}/api/visits" | grep -q visits
+          echo "site and counter API are up"
