@@ -92,17 +92,18 @@
 <section id="skills" class="sec"><div class="wrap"><p class="eyebrow">Skills</p><h2>Tools I use in production and in the lab</h2><div class="skills"><div class="skill"><h4>Cloud &amp; AWS</h4><ul><li>IAM &amp; least privilege</li><li>VPC</li><li>CloudTrail</li><li>GuardDuty</li><li>Security Hub</li><li>Config</li><li>KMS</li><li>Lambda</li><li>EventBridge</li><li>Athena</li><li>CloudFront</li><li>S3</li></ul></div><div class="skill"><h4>IaC &amp; CI/CD</h4><ul><li>Terraform</li><li>HCP Terraform</li><li>GitHub Actions</li><li>OIDC federation</li><li>Checkov</li><li>TFLint</li><li>Docker</li></ul></div><div class="skill"><h4>Detection &amp; Response</h4><ul><li>Splunk SPL</li><li>QRadar</li><li>Google SecOps</li><li>CrowdStrike</li><li>Sigma</li><li>MITRE ATT&amp;CK</li><li>SOAR</li></ul></div><div class="skill"><h4>Compliance</h4><ul><li>NIST 800-53</li><li>NIST 800-171</li><li>CMMC L2</li><li>FedRAMP</li><li>CIS Benchmarks</li></ul></div></div></div></section>
 <section id="experience" class="sec alt"><div class="wrap"><p class="eyebrow">Experience</p><h2>Where I've done the work</h2><ul class="exp"><li><b>Senior Threat Detection &amp; Response Engineer</b><span>Global pharmaceutical enterprise</span><em>Detection-as-code, multi-cloud posture, SOAR automation</em></li><li><b>DFIR Engineer / SIRT</b><span>Global pharmaceutical enterprise</span><em>Incident response end to end, forensics, threat intelligence</em></li><li><b>Cyber Security Analyst</b><span>Anderson Packaging</span><em>Security control assessments, SSPs, network monitoring</em></li><li><b>Linux Admin / Cyber Analyst</b><span>Federal Aviation Administration (contractor)</span><em>A&amp;A packages, FISMA control assessment</em></li></ul></div></section>
 <section id="built" class="sec"><div class="wrap">
-<p class="eyebrow">How this site runs</p><h2>Serverless on AWS, deployed with no stored keys</h2>
+<p class="eyebrow">How this site runs</p><h2>Serverless on AWS, managed by HCP Terraform, no stored keys</h2>
 <pre class="arch">Browser
   └── CloudFront (HTTPS, OAC, security headers)
         ├── /*      → S3 (private bucket: HTML, CSS, JS)
         └── /api/*  → API Gateway (HTTP API)
-                        └── Lambda (Python) → DynamoDB (visitor counter)</pre>
+                        └── Lambda (Python) → DynamoDB (visitor counter)
+CloudWatch alarms (edge, API, Lambda) → SNS → email</pre>
 <ul class="facts">
-<li><b>Terraform</b> provisions every resource; state in an encrypted S3 backend with locking.</li>
-<li><b>GitHub Actions</b> deploys on push to main through OIDC: a 1-hour role that can only sync this bucket and invalidate this distribution.</li>
+<li><b>HCP Terraform</b> plans every infrastructure change on the pull request; nothing applies until I approve it. It reaches AWS with dynamic credentials (OIDC), a one-hour role per run.</li>
+<li><b>GitHub Actions</b> tests and scans every change, then deploys site content through OIDC: a role that can only sync this bucket and invalidate this distribution.</li>
 <li><b>Same-origin API</b>: CloudFront routes /api/* to API Gateway, so no CORS and no public API URL in the page.</li>
-<li><b>Abuse limits</b>: API throttling and Lambda reserved concurrency cap what a bot can cost.</li>
+<li><b>Guardrails</b>: API throttling caps abuse, five CloudWatch alarms email me, and permissions boundaries cap every role Terraform creates.</li>
 </ul>
 <p class="counter">You are visitor <b id="visits">…</b> · <a href="https://github.com/mk7git-hub/devops-cloud-portfolio" target="_blank" rel="noopener">see the code</a></p>
 </div></section>
@@ -111,6 +112,6 @@
 <div class="cta"><a class="btn" href="mailto:kwadwo.kaboagye@gmail.com">Email me</a><a class="btn ghost" href="https://www.linkedin.com/in/kwadwo-tech/" target="_blank" rel="noopener">LinkedIn</a><a class="btn ghost" href="https://github.com/mk7git-hub" target="_blank" rel="noopener">GitHub</a></div>
 </div></section>
 </main>
-<footer class="foot"><div class="wrap">Served from S3 via CloudFront · counter by Lambda + DynamoDB · deployed by GitHub Actions (OIDC)</div></footer>
+<footer class="foot"><div class="wrap">Served from S3 via CloudFront · counter by Lambda + DynamoDB · infrastructure by HCP Terraform · content by GitHub Actions (OIDC)</div></footer>
 <script src="assets/app.js"></script>
 </body></html>

@@ -26,23 +26,35 @@ jobs:
         run: pytest -q
 
   iac:
+    # Plan and apply happen in HCP Terraform (VCS-driven workspace, manual apply).
+    # This job only formats, validates, lints and scans, with no cloud credentials.
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        dir: [infra, bootstrap]
     defaults:
       run:
-        working-directory: infra
+        working-directory: ${{ matrix.dir }}
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
       - run: terraform fmt -check -recursive
-      - run: terraform init -backend=false -input=false
-      - run: terraform validate
+      - name: validate (no backend, no credentials)
+        run: |
+          # the cloud block needs an HCP org to init; validation doesn't, so drop it for this check only
+          [ -f versions.tf ] && sed -i '/cloud {/,/^  }/d' versions.tf
+          terraform init -backend=false -input=false
+          terraform validate
       - uses: terraform-linters/setup-tflint@v4
-      - run: tflint --init && tflint
+      - run: tflint --init --config "$GITHUB_WORKSPACE/infra/.tflint.hcl" && tflint --config "$GITHUB_WORKSPACE/infra/.tflint.hcl"
       - name: checkov
         run: pip install checkov && checkov -d . --quiet --compact --framework terraform
 
   deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # content only: infrastructure changes are planned and applied in HCP Terraform
+    # skipped until the repo variables exist
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.AWS_DEPLOY_ROLE_ARN != ''
     needs: [test, iac]
     runs-on: ubuntu-latest
     permissions:

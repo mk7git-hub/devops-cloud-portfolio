@@ -4,6 +4,9 @@ locals {
   name        = "devops-portfolio"
   bucket_name = "${local.name}-site-${data.aws_caller_identity.me.account_id}"
   use_domain  = var.domain_name != ""
+  # Created by bootstrap/. Every role this workspace creates must carry it, so a role it makes
+  # can never hold more than the counter and the deploy need.
+  workload_boundary = "arn:aws:iam::${data.aws_caller_identity.me.account_id}:policy/${local.name}-workload-boundary"
 }
 
 # Private bucket: only CloudFront (via OAC) can read it.

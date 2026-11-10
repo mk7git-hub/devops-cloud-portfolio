@@ -10,6 +10,7 @@ locals {
 
 resource "aws_iam_role" "deploy" {
   name                 = "${local.name}-github-deploy"
+  permissions_boundary = local.workload_boundary
   max_session_duration = 3600
   assume_role_policy = jsonencode({
     Version = "2012-10-17"

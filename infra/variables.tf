@@ -36,3 +36,20 @@ variable "api_rate_limit" {
   type    = number
   default = 10
 }
+
+variable "alert_email" {
+  type        = string
+  sensitive   = true
+  description = "Where CloudWatch alarms are emailed. Set as a sensitive variable in HCP Terraform, never committed."
+  validation {
+    # Fail in the plan with a clear message instead of halfway through apply (SNS rejects bad addresses).
+    condition     = can(regex("^[^@\\s\"]+@[^@\\s\"]+\\.[A-Za-z]{2,}$", var.alert_email))
+    error_message = "alert_email must be a bare email address: no quotes, no spaces, HCL unticked."
+  }
+}
+
+variable "request_spike_threshold" {
+  type        = number
+  default     = 10000
+  description = "CloudFront requests per 5 minutes before the spike alarm fires"
+}
