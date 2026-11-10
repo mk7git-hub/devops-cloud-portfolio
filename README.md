@@ -4,7 +4,7 @@
 
 My portfolio site, built the way I'd build a production service: a private S3 origin behind CloudFront, a live visitor counter (API Gateway → Lambda → DynamoDB), every resource in Terraform, and GitHub Actions deploying through OIDC with no AWS keys anywhere.
 
-**Live site:** `<CloudFront URL after first deploy>`  ·  **Sister version:** [devops-cloud-portfolio-v2](https://github.com/mk7git-hub/devops-cloud-portfolio-v2) (HCP Terraform + monitoring)
+**Live site:** https://doq2k1da696cu.cloudfront.net  ·  **Sister version:** [devops-cloud-portfolio-v2](https://github.com/mk7git-hub/devops-cloud-portfolio-v2) (HCP Terraform + monitoring)
 
 ## Architecture
 
@@ -62,7 +62,25 @@ Low-traffic estimate: S3 cents, CloudFront within the free tier, API Gateway/Lam
 
 ## Evidence
 
-`docs/img/` (added after the first deploy): the pipeline run, the live site, and the counter incrementing.
+Live in a dedicated AWS account, deployed by the pipeline below.
+
+**The site**, served from a private S3 bucket through CloudFront:
+
+![Live portfolio site](docs/img/site.png)
+
+**The visitor counter working end to end** (browser → CloudFront `/api/*` → API Gateway → Lambda → DynamoDB):
+
+![How it's built section with the live visitor count](docs/img/counter.png)
+
+**Pipeline:** tests and IaC checks gate the deploy; the deploy job signs in through OIDC, syncs the bucket, invalidates CloudFront and smoke-tests the page and the API:
+
+![Green ci-deploy run](docs/img/pipeline.png)
+
+### What broke on the first deploy
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| First pipeline run: deploy failed with "Could not load credentials" | The deploy ran before `terraform apply` had created the OIDC role and before the repo variables existed | Applied the infrastructure, set the four repo variables, re-ran the same commit: green, no code change needed |
 
 ## Credits
 
