@@ -1,6 +1,0 @@
-# Copy to backend.hcl (gitignored) and run: terraform init -backend-config=backend.hcl
-bucket         = "slz-tfstate-<account-id>" # state bucket created by aws-secure-landing-zone/bootstrap
-key            = "devops-cloud-portfolio/terraform.tfstate"
-region         = "us-east-1"
-dynamodb_table = "slz-tflock"
-encrypt        = true

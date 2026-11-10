@@ -7,3 +7,5 @@ infra/terraform.tfvars
 __pycache__/
 .pytest_cache/
 .ruff_cache/
+bootstrap/terraform.tfvars
+bootstrap/.terraform/

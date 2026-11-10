@@ -1,5 +1,7 @@
+# These are set as workspace variables in HCP Terraform (alert_email as sensitive). Kept here for reference.
 owner           = "your-name"
 github_repo     = "mk7git-hub/devops-cloud-portfolio"
 github_owner_id = "255473628"
 github_repo_id  = "<from: gh api repos/mk7git-hub/devops-cloud-portfolio --jq .id>"
+# alert_email   = set only in HCP Terraform, sensitive
 # domain_name   = "example.com"   # optional, needs a Route 53 hosted zone
